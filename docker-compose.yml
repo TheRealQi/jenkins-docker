@@ -8,17 +8,21 @@ services:
       - "50000:50000"
     volumes:
       - jenkins-data:/var/jenkins_home
+      - jenkins-keys:/var/jenkins_home/.ssh
     networks:
       - jenkins-network
+
   jenkins-java-agent:
     build: ./jenkins-java-agent
     container_name: jenkins-java-agent
     restart: unless-stopped
     volumes:
-      - jenkins-data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+      - jenkins-keys:/home/jenkins/.ssh-shared:ro
     networks:
       - jenkins-network
+    depends_on:
+      - jenkins-controller
 
 networks:
   jenkins-network:
@@ -26,3 +30,4 @@ networks:
 
 volumes:
   jenkins-data:
+  jenkins-keys:
