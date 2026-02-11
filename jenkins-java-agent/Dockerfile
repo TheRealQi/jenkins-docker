@@ -25,4 +25,8 @@ RUN apt-get update && apt-get install -y docker-ce-cli kubectl && \
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+
+RUN mkdir -p /home/jenkins/.m2 && chown -R jenkins:jenkins /home/jenkins/.m2 && chmod -R u+rwX /home/jenkins/.m2
+RUN mkdir -p /home/jenkins/.cache/trivy && chown -R jenkins:jenkins /home/jenkins/.cache/trivy && chmod -R u+rwX /home/jenkins/.cache/trivy
+
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
