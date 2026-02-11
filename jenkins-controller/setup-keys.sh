@@ -3,10 +3,8 @@ set -e
 
 mkdir -p /var/jenkins_home/.ssh
 if [ -f /var/jenkins_home/.ssh/id_ed25519 ]; then
-    rm -f /var/jenkins_home/.ssh/id_ed25519
-    rm -f /var/jenkins_home/.ssh/id_ed25519.pub
-fi
-if [ ! -f /var/jenkins_home/.ssh/id_ed25519 ]; then
+    echo "SSH key pair already exists. Skipping generation."
+elif [ ! -f /var/jenkins_home/.ssh/id_ed25519 ]; then
     echo "Generating new SSH key pair..."
     su jenkins -c "ssh-keygen -t ed25519 -f /var/jenkins_home/.ssh/id_ed25519 -N '' -q -C 'jenkins@controller'"
     echo "Key pair generated successfully."
