@@ -19,11 +19,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - jenkins-keys:/home/jenkins/.ssh-shared:ro
+      - jenkins-cache:/home/jenkins/.m2/repository
+      - jenkins-cache:/home/jenkins/.cache/trivy
     networks:
       - jenkins-network
     depends_on:
       - jenkins-controller
-
 networks:
   jenkins-network:
     driver: bridge
@@ -31,3 +32,4 @@ networks:
 volumes:
   jenkins-data:
   jenkins-keys:
+  jenkins-cache:
